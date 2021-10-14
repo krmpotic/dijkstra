@@ -35,3 +35,26 @@ func TestGetPath(t *testing.T) {
 	}
 
 }
+
+func TestGetEdge(t *testing.T) {
+	g := NewGraph()
+
+	want := 80085
+	g.AddEdge("A", "B", want)
+
+	e := g.getEdge("A", "B")
+	if e == nil{
+		t.Fatalf(`getEdge("A", "B") = nil`)
+	}
+	if e.D != want {
+		t.Fatalf(`getEdge("A", "B") = %d, want %d`, e.D, want)
+	}
+
+	e = g.getEdge("B", "A")
+	if e == nil{
+		t.Fatalf(`getEdge("B", "A") = nil`)
+	}
+	if e.D != want {
+		t.Fatalf(`getEdge("B", "A") = %d, want %d`, e.D, want)
+	}
+}
