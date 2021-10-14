@@ -1,8 +1,4 @@
-package main
-
-import (
-	"fmt"
-)
+package dijkstra
 
 type graph struct {
 	nodes map[string]*node
@@ -100,48 +96,3 @@ func (g *graph) getPath(start, end string) (int, []string) {
 	}
 }
 
-func (g *graph) printDot(path []string) {
-	fmt.Println("graph {")
-	for _, e := range g.edges {
-		fmt.Printf("\t%s -- %s [label=%d]\n", e.n[0].id, e.n[1].id, e.D)
-	}
-	if path != nil {
-		fmt.Printf("\tsubgraph {\n\t\t")
-		for i, n := range path {
-			fmt.Printf("%s", n)
-			if i != len(path)-1 {
-				fmt.Printf(", ")
-			}
-		}
-		fmt.Println(" [style=filled, fillcolor=yellow]")
-		fmt.Println("\t}")
-	}
-	fmt.Println("}")
-}
-
-func (g *graph) printRaw() {
-	fmt.Println("Nodes:")
-	for k, v := range g.nodes {
-		fmt.Println(k, ":", v)
-	}
-	fmt.Println("Edges:")
-	for _, v := range g.edges {
-		fmt.Println(v)
-	}
-}
-
-func main() {
-	g := NewGraph()
-	g.addEdge("N1", "N2", 7)
-	g.addEdge("N1", "N3", 9)
-	g.addEdge("N1", "N6", 14)
-	g.addEdge("N2", "N3", 10)
-	g.addEdge("N2", "N4", 15)
-	g.addEdge("N3", "N4", 11)
-	g.addEdge("N3", "N6", 2)
-	g.addEdge("N4", "N5", 6)
-	g.addEdge("N5", "N6", 9)
-	_, p := g.getPath("N1", "N5")
-
-	g.printDot(p)
-}
