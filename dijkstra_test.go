@@ -30,7 +30,7 @@ func TestGetPath(t *testing.T) {
 
 	g.AddEdge("X", "Y", 9)
 	b, p = g.GetPath("N1", "Y")
-	if true || b != 0 || p != nil {
+	if b != 0 || p != nil {
 		t.Fatalf(`getPath("N1", "X") = %d, %v, want 0, nil`, b, p)
 	}
 
