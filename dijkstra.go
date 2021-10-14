@@ -54,6 +54,11 @@ func (g *graph) AddEdge(id1, id2 string, D int) {
 }
 
 func (g *graph) GetPath(start, end string) (int, []string) {
+	for _, n := range g.nodes  {
+		// reset state from previous GetPath call
+		n.B, n.from, n.once, n.done = 0, nil, false, false
+	}
+
 	var f []*node
 	S, E := g.nodes[start], g.nodes[end]
 	S.once = true
