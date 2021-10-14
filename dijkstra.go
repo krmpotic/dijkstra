@@ -30,7 +30,7 @@ func (g *graph) getEdge(id1, id2 string) *edge {
 	return nil
 }
 
-func (g *graph) addEdge(id1, id2 string, D int) {
+func (g *graph) AddEdge(id1, id2 string, D int) {
 	if g.getEdge(id1, id2) != nil {
 		return
 	}
@@ -59,7 +59,7 @@ func (g *graph) addEdge(id1, id2 string, D int) {
 	e.n[1].neigh = append(e.n[1].neigh, e.n[0])
 }
 
-func (g *graph) getPath(start, end string) (int, []string) {
+func (g *graph) GetPath(start, end string) (int, []string) {
 	var f []*node
 	S, E := g.nodes[start], g.nodes[end]
 	S.once = true
