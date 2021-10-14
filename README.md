@@ -1,6 +1,6 @@
 # dijkstra
 
-Find the shortest path and prints the graphviz .dot graph.
+Create a graph, find the shortest path and print a graphviz .dot file.
 
 # usage
 
