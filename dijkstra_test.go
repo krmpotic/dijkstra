@@ -25,7 +25,7 @@ func TestGetPath(t *testing.T) {
 		}
 	}
 	if b != want.b || !ok {
-		t.Fatalf(`getPath("N1", "N5") = %d, ..., want %d, ...`, b, want.b)
+		t.Fatalf(`getPath("N1", "N5") = %d, %v, want %d, %v`, b, p, want.b, want.p)
 	}
 
 	g.AddEdge("X", "Y", 9)
