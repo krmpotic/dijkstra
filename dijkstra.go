@@ -60,7 +60,15 @@ func (g *graph) GetPath(start, end string) (int, []string) {
 	}
 
 	var f []*node
-	S, E := g.nodes[start], g.nodes[end]
+	S, ok := g.nodes[start]
+	if !ok {
+		return 0, nil
+	}
+	E, ok := g.nodes[end]
+	if !ok {
+		return 0, nil
+	}
+
 	S.once = true
 	f = append(f, S)
 
