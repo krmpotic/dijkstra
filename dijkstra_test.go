@@ -5,7 +5,10 @@ import (
 )
 
 func TestGetPath(t *testing.T) {
-	var want = struct{ b int; p []string } { 20, []string{"N5", "N6", "N3", "N1"} }
+	var want = struct {
+		b int
+		p []string
+	}{20, []string{"N5", "N6", "N3", "N1"}}
 	g := NewGraph()
 	g.AddEdge("N1", "N2", 7)
 	g.AddEdge("N1", "N3", 9)
@@ -43,7 +46,7 @@ func TestGetEdge(t *testing.T) {
 	g.AddEdge("A", "B", want)
 
 	e := g.getEdge("A", "B")
-	if e == nil{
+	if e == nil {
 		t.Fatalf(`getEdge("A", "B") = nil`)
 	}
 	if e.D != want {
@@ -51,7 +54,7 @@ func TestGetEdge(t *testing.T) {
 	}
 
 	e = g.getEdge("B", "A")
-	if e == nil{
+	if e == nil {
 		t.Fatalf(`getEdge("B", "A") = nil`)
 	}
 	if e.D != want {

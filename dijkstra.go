@@ -30,7 +30,7 @@ func (g *graph) getEdge(id1, id2 string) *edge {
 	return nil
 }
 
-func (g *graph) newNode(id string) (*node) {
+func (g *graph) newNode(id string) *node {
 	if n, ok := g.nodes[id]; ok {
 		return n
 	}
@@ -54,7 +54,7 @@ func (g *graph) AddEdge(id1, id2 string, D int) {
 }
 
 func (g *graph) GetPath(start, end string) (int, []string) {
-	for _, n := range g.nodes  {
+	for _, n := range g.nodes {
 		// reset state from previous GetPath call
 		n.B, n.from, n.once, n.done = 0, nil, false, false
 	}
@@ -94,4 +94,3 @@ func (g *graph) GetPath(start, end string) (int, []string) {
 		f = u
 	}
 }
-
