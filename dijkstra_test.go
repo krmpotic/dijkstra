@@ -5,18 +5,17 @@ import (
 )
 
 func TestGetPath(t *testing.T) {
+	type in_edge struct {
+		id1, id2 string
+		D        int
+	}
+
 	var in = []struct {
 		start, goal string
-		edges       []struct {
-			id1, id2 string
-			D        int
-		}
+		edges       []in_edge
 	}{
 		{"N1", "N5",
-			[]struct {
-				id1, id2 string
-				D        int
-			}{
+			[]in_edge{
 				{"N1", "N2", 7},
 				{"N1", "N3", 9},
 				{"N1", "N6", 14},
@@ -27,12 +26,33 @@ func TestGetPath(t *testing.T) {
 				{"N4", "N5", 6},
 				{"N5", "N6", 9},
 			}},
+
+		{"N0", "N11",
+			[]in_edge{
+				{"N0", "N1", 5},
+				{"N1", "N2", 9},
+				{"N2", "N3", 13},
+				{"N2", "N0", 12},
+				{"N4", "N5", 3},
+				{"N5", "N6", 10},
+				{"N6", "N7", 3},
+				{"N6", "N4", 2},
+				{"N7", "N8", 10},
+				{"N7", "N5", 4},
+				{"N8", "N9", 1},
+				{"N10", "N8", 3},
+				{"N10", "N9", 12},
+				{"N10", "N11", 12},
+				{"N11", "N9", 1},
+			},
+		},
 	}
 	var want = []struct {
 		b int
 		p []string
 	}{
 		{20, []string{"N5", "N6", "N3", "N1"}},
+		{0, nil},
 	}
 
 	for k := range in {
