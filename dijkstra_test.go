@@ -5,36 +5,61 @@ import (
 )
 
 func TestGetPath(t *testing.T) {
-	var want = struct {
+	var in = []struct {
+		start, goal string
+		edges       []struct {
+			id1, id2 string
+			D        int
+		}
+	}{
+		{"N1", "N5",
+			[]struct {
+				id1, id2 string
+				D        int
+			}{
+				{"N1", "N2", 7},
+				{"N1", "N3", 9},
+				{"N1", "N6", 14},
+				{"N2", "N3", 10},
+				{"N2", "N4", 15},
+				{"N3", "N4", 11},
+				{"N3", "N6", 2},
+				{"N4", "N5", 6},
+				{"N5", "N6", 9},
+			}},
+	}
+	var want = []struct {
 		b int
 		p []string
-	}{20, []string{"N5", "N6", "N3", "N1"}}
-	g := NewGraph()
-	g.AddEdge("N1", "N2", 7)
-	g.AddEdge("N1", "N3", 9)
-	g.AddEdge("N1", "N6", 14)
-	g.AddEdge("N2", "N3", 10)
-	g.AddEdge("N2", "N4", 15)
-	g.AddEdge("N3", "N4", 11)
-	g.AddEdge("N3", "N6", 2)
-	g.AddEdge("N4", "N5", 6)
-	g.AddEdge("N5", "N6", 9)
-	b, p := g.GetPath("N1", "N5")
+	}{
+		{20, []string{"N5", "N6", "N3", "N1"}},
+	}
 
-	ok := true
-	for i := range want.p {
-		if p[i] != want.p[i] {
+	for k := range in {
+		g := NewGraph()
+		for _, edge := range in[k].edges {
+			g.AddEdge(edge.id1, edge.id2, edge.D)
+		}
+		b, p := g.GetPath(in[k].start, in[k].goal)
+
+		ok := true
+		if len(p) != len(want[k].p) {
 			ok = false
 		}
-	}
-	if b != want.b || !ok {
-		t.Fatalf(`getPath("N1", "N5") = %d, %v, want %d, %v`, b, p, want.b, want.p)
-	}
+		for i := range want[k].p {
+			if p[i] != want[k].p[i] {
+				ok = false
+			}
+		}
+		if b != want[k].b || !ok {
+			t.Fatalf(`getPath("N1", "N5") = %d, %v, want %d, %v`, b, p, want[k].b, want[k].p)
+		}
 
-	g.AddEdge("X", "Y", 9)
-	b, p = g.GetPath("N1", "Y")
-	if b != 0 || p != nil {
-		t.Fatalf(`getPath("N1", "X") = %d, %v, want 0, nil`, b, p)
+		g.AddEdge("HANGING_NODE_1", "HANGING_NODE_2", 9)
+		b, p = g.GetPath(in[k].edges[0].id1, "HANGING_NODE_1")
+		if b != 0 || p != nil {
+			t.Fatalf(`getPath("N1", "X") = %d, %v, want 0, nil`, b, p)
+		}
 	}
 
 }
