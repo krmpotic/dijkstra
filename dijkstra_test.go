@@ -52,7 +52,7 @@ func TestGetPath(t *testing.T) {
 			}
 		}
 		if b != want[k].b || !ok {
-			t.Fatalf(`getPath("N1", "N5") = %d, %v, want %d, %v`, b, p, want[k].b, want[k].p)
+			t.Fatalf(`%d. getPath(%q, %q) = %d, %v, want %d, %v`, k, in[k].start, in[k].goal, b, p, want[k].b, want[k].p)
 		}
 
 		g.AddEdge("HANGING_NODE_1", "HANGING_NODE_2", 9)
